@@ -16,11 +16,14 @@ function newGame() {
     if (circle.getAttribute("data-listener") !== "true") {
       // check the attribute of each circle and if attribute is set to false, then we will add our event listener
       circle.addEventListener("click", (e) => {
-        // so if it's not true we will add addEventListener "click". We passed event object,click object as e
-        let move = e.target.getAttribute("id"); // the reason we need e event object is that we're going to get our click targets ID (button1,button2,button3, depenets on which circle we click). We stored that in move variable
-        lightsOn(move); // call lights on with move
-        game.playerMoves.push(move); // we'll push that move into our playerMOves
-        playerTurn(); // and call our playerTurn fuction
+        if (game.currentGame.length > 0 && !game.turnInProgress) {
+          // so if it's not true we will add addEventListener "click". We passed event object,click object as e
+          let move = e.target.getAttribute("id"); // the reason we need e event object is that we're going to get our click targets ID (button1,button2,button3, depenets on which circle we click). We stored that in move variable
+          game.lastButton = move;
+          lightsOn(move); // call lights on with move
+          game.playerMoves.push(move); // we'll push that move into our playerMOves
+          playerTurn(); // and call our playerTurn fuction
+        }
       });
       circle.setAttribute("data-listener", true); // after adding the event listener we can set the data listener attribute on our circle to true
     }
@@ -48,12 +51,14 @@ function lightsOn(circ) {
 }
 
 function showTurns() {
+  game.turnInProgress = true;
   game.turnNumber = 0;
   let turns = setInterval(() => {
     lightsOn(game.currentGame[game.turnNumber]);
     game.turnNumber++;
     if (game.turnNumber >= game.currentGame.length) {
       clearInterval(turns);
+      game.turnInProgress = false;
     }
   }, 800);
 }
