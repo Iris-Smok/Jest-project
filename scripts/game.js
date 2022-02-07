@@ -20,7 +20,7 @@ function newGame() {
         let move = e.target.getAttribute("id"); // the reason we need e event object is that we're going to get our click targets ID (button1,button2,button3, depenets on which circle we click). We stored that in move variable
         lightsOn(move); // call lights on with move
         game.playerMoves.push(move); // we'll push that move into our playerMOves
-        playrTurn(); // and call our playerTurn fuction
+        playerTurn(); // and call our playerTurn fuction
       });
       circle.setAttribute("data-listener", true); // after adding the event listener we can set the data listener attribute on our circle to true
     }
@@ -59,13 +59,18 @@ function showTurns() {
 }
 
 function playerTurn() {
-  let i = game.playerMoves.length - 1; // to get the index of the ast element from our playerMoves array. We wanto to comapre that with the same index in the current game array
-  if (game.currentGame[1] === game.playerMoves[1]) {
+  let i = game.playerMoves.length - 1; // to get the index of the ast element from our playerMoves array.
+  if (game.currentGame[i] === game.playerMoves[i]) {
+    // We wanto to comapre that with the same index in the current game array, If our player gets answer correct then these two should match
     if (game.currentGame.length == game.playerMoves.length) {
-      game.score++;
+      // if the length of our current game array is equal to the length of our player moves then we must be at the end of the swquance, adn the player got them all correct
+      game.score++; // to increment the score
       showScore();
       addTurn();
     }
+  } else {
+    alert("Wrong move!");
+    newGame();
   }
 }
 

@@ -12,6 +12,8 @@ const {
   playerTurn,
 } = require("../game");
 
+jest.spyOn(window, "alert").mockImplementation(() => {});
+
 // function to load index.html file into the DOM
 beforeAll(() => {
   let fs = require("fs");
@@ -110,5 +112,10 @@ describe("gameplay works correctly", () => {
     game.playerMoves.push(game.currentGame[0]);
     playerTurn();
     expect(game.score).toBe(1);
+  });
+  test("should call an alert if the move is wrong", () => {
+    game.playerMoves.push("wrong");
+    playerTurn();
+    expect(window.alert).toBeCalledWith("Wrong move!");
   });
 });
