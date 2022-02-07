@@ -69,6 +69,13 @@ describe("newGame works correctly", () => {
   test("should display 0 for the element with an id of score", () => {
     expect(document.getElementById("score").innerText).toEqual(0);
   });
+  test("expect data-listener to be tru", () => {
+    const elements = document.getElementsByClassName("circle"); // to get all of the elements which have the class of circle, store them in the constant
+    for (let element of elements) {
+      // loop through each of these elements
+      expect(element.getAttribute("data-listener")).toEqual("true"); // expect  that the attribute of that element(circle) the data listener attribute is set to true
+    }
+  });
 });
 
 describe("gameplay works correctly", () => {
