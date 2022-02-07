@@ -58,4 +58,23 @@ function showTurns() {
   }, 800);
 }
 
-module.exports = { game, newGame, showScore, addTurn, lightsOn, showTurns }; // we'll exporting more than one object and fuction from this file so we need to put them in curly braces
+function playerTurn() {
+  let i = game.playerMoves.length - 1; // to get the index of the ast element from our playerMoves array. We wanto to comapre that with the same index in the current game array
+  if (game.currentGame[1] === game.playerMoves[1]) {
+    if (game.currentGame.length == game.playerMoves.length) {
+      game.score++;
+      showScore();
+      addTurn();
+    }
+  }
+}
+
+module.exports = {
+  game,
+  newGame,
+  showScore,
+  addTurn,
+  lightsOn,
+  showTurns,
+  playerTurn,
+}; // we'll exporting more than one object and fuction from this file so we need to put them in curly braces

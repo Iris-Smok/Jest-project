@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 
-const { TestWatcher } = require("jest");
 const {
   game,
   newGame,
@@ -10,6 +9,7 @@ const {
   addTurn,
   lightsOn,
   showTurns,
+  playerTurn,
 } = require("../game");
 
 // function to load index.html file into the DOM
@@ -104,5 +104,11 @@ describe("gameplay works correctly", () => {
     game.turnNumber = 42;
     showTurns();
     expect(game.turnNumber).toBe(0);
+  });
+  test("should increment the score if the turn is correct", () => {
+    // test to check if the score increments if the move is correct
+    game.playerMoves.push(game.currentGame[0]);
+    playerTurn();
+    expect(game.score).toBe(1);
   });
 });
